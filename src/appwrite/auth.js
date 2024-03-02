@@ -37,8 +37,7 @@ export class AuthService {
 
         try {
             const userAccount = await this.account.createEmailPasswordSession( email, password );
-
-
+            return userAccount;
         } catch (error) {
             console.log(error);
             throw error;
@@ -49,8 +48,10 @@ export class AuthService {
         try {
             return await this.account.get();
         } catch (error) {
-            
+            throw error;
         }
+
+        return null;
     }
 
     async logoutAccount(){
