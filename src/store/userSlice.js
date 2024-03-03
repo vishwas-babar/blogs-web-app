@@ -10,6 +10,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         loginUser: ( state, action ) => {
+            console.log("state: ", state)
+            console.log(action)
             state.status = true,
             state.userData = action.payload
         },

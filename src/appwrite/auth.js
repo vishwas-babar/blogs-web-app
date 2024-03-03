@@ -25,6 +25,7 @@ export class AuthService {
                 return this.loginAccount({ email, password });
             }else{
                 // suppose user is created but it is null or undefined then 
+                throw error
                 return;
             }
         } catch (error) {
@@ -36,7 +37,7 @@ export class AuthService {
     async loginAccount({ email, password }){
 
         try {
-            const userAccount = await this.account.createEmailPasswordSession( email, password );
+            const userAccount = await this.account.createEmailSession( email, password );
             return userAccount;
         } catch (error) {
             console.log(error);
@@ -65,6 +66,7 @@ export class AuthService {
     }
 }
 
+// const authService = Object.freeze(new AuthService());
 const authService = new AuthService(); // we created object here directly
 // so we dont have to create a object everytime when we have use any service from this
 // we can use this directly authService.createAccount(parameters);

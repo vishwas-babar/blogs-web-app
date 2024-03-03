@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import authService, { AuthService } from './appwrite/auth';
 import { loginUser, logoutUser } from './store/userSlice';
 import { TopNav } from './components/index.js';
+import PostCard from './components/PostCard.jsx';
 
 function App() {
 
@@ -33,8 +34,10 @@ function App() {
 
   return (
     <>
-      <TopNav />
-      <h1>This is react project</h1>
+      {/* <PostCard /> */}
+      <div className=' h-screen w-full flex items-center justify-center'>
+        <h1 className='mt-20'>This is react project</h1>
+      </div>
     </>
   )
 }

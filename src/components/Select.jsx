@@ -17,7 +17,7 @@ function Select({
             {...props}
         >
             {options?.map(option => (
-                <options key={option.value} value={option.value} >{option.name}</options>
+                <option key={option.value} value={option.value} >{option.name}</option>
             ))}
         </select>
     </div>

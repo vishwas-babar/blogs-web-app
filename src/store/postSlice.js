@@ -5,7 +5,8 @@ const initialState = {
     id: nanoid(),
     title: "this is title", 
     content: "this is the content",
-    coverImage: "coverImage url",
+    coverImageUrl: "coverImage url",
+    coverImageId: "coverimage id",
     status: "active",
 }
 
@@ -14,11 +15,12 @@ export const postSlice = createSlice({
     initialState,
     reducers: {
         addPost: (state, action) => {}, // add reducer function here
-        deletePost: (state, action) => {}
+        deletePost: (state, action) => {},
+        updatePost: (state, action) => {}
     }
 })
 
 
-export const { addPost, deletePost } = postSlice.actions;
+export const { addPost, deletePost, updatePost } = postSlice.actions;
 
 export default postSlice.reducer;

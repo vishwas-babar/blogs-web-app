@@ -15,6 +15,7 @@ function Signup() {
 
     const signup = async (data) => {
 
+        console.log("creating the account...")
         try {
             const response = await authService.createAccount(data)
 

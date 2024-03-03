@@ -18,8 +18,11 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({ title, content, coverImage, status, userId }){
+    async createPost({ title, content, coverImageUrl, coverImageId, status, userId }){
         try {
+
+            console.log("crating the new Post: ")
+
             return await this.databases.createDocument( 
                 conf.appwriteDBId,
                 conf.appwriteArticleCollectionId,
@@ -27,7 +30,8 @@ export class Service {
                 {
                     title,
                     content,
-                    coverImage,
+                    coverImageUrl,
+                    coverImageId,
                     status,
                     userId,
                 }
@@ -38,8 +42,9 @@ export class Service {
     }
 
 
-    async updatePost(postId, { title, content, coverImage, status }){
+    async updatePost(postId, { title, content, coverImageId, coverImageUrl, status }){
         try {
+            console.log("updating the post")
             return await this.databases.updateDocument(
                 conf.appwriteDBId,
                 conf.appwriteArticleCollectionId,
@@ -47,12 +52,14 @@ export class Service {
                 {
                     title,
                     content,
-                    coverImage,
+                    coverImageUrl,
+                    coverImageId,
                     status
                 }
             )
         } catch (error) {
              console.log("error occured: ", error);
+             throw error;
         }
     }
 
@@ -77,22 +84,23 @@ export class Service {
             return await this.databases.getDocument(
                 conf.appwriteDBId,
                 conf.appwriteArticleCollectionId,
-                postId,
-                
+                postId,  
             )
         } catch (error) {
             console.log("error occured: ", error);
+            throw error
             return null;
         }
     }
 
     async getManyPost( queries = [Query.equal("status", "active")] ){
         try {
-            return await this.databases.listDocuments(
+            const posts = await this.databases.listDocuments(
                 conf.appwriteDBId,
                 conf.appwriteArticleCollectionId,
                 queries,
             )
+            return posts;
         } catch (error) {
             console.log("error occured: ", error);
             return null;
@@ -102,16 +110,16 @@ export class Service {
 
     // upload file service
     async uploadFile(file){
+        console.log("got the file input - ", file)
         try {
-            await this.bucket.createFile(
+            return await this.bucket.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
                 file,
             )
-
-            return true;
         } catch (error) {
             console.log("error occured: ", error);
+            throw error;
             return false;
         }
     }
@@ -123,7 +131,19 @@ export class Service {
             return true;
         } catch (error) {
             console.log("error occured: ", error);
+            throw error;
             return false;
+        }
+    }
+
+    async getFilePreview(fileId){
+        try {
+            const fileUrl =  await this.bucket.getFilePreview(conf.appwriteBucketId, fileId)
+            console.log(fileUrl)
+            return fileUrl
+        } catch (error) {
+            console.log("error when getting the preview of image")
+            throw error
         }
     }
 
