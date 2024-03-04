@@ -2,10 +2,11 @@ import Layout from "./Layout";
 import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
 import CreatePost from "./CreatePost";
-import AllPost from "./AllPost";
+import MyPosts from "./MyPosts";
 import EditPost from "./EditPost";
 import Home from "./Home";
 import MyProfile from "./MyProfile";
+import PostPage from "./PostPage";
 
 
 
@@ -14,9 +15,10 @@ export {
     SignupPage,
     Layout,
     CreatePost,
-    AllPost,
+    MyPosts,
     EditPost,
     Home,
     MyProfile,
+    PostPage,
     
 }

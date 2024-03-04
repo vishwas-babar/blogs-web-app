@@ -107,6 +107,25 @@ export class Service {
         }
     }
 
+    async getPostsByUser(userId) {
+        try {
+            const queries = [
+                Query.equal("userId", userId)
+            ];
+
+            const posts = await this.databases.listDocuments(
+                conf.appwriteDBId,
+                conf.appwriteArticleCollectionId,
+                queries,
+            )
+
+            return posts;
+        } catch (error) {
+            console.log("error occured: ", error);
+            return null;
+        }
+    }
+
 
     // upload file service
     async uploadFile(file){

@@ -13,7 +13,7 @@ function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, getValues, control, } = useForm({
         defaultValues: {
             title: post?.title || "",
-            slug: post?.slug || "",
+            slug: "",
             content: post?.content || "",
             status: post?.status || "active",
         }
@@ -27,7 +27,12 @@ function PostForm({ post }) {
         // if post is already  exist then update it otherwise create new post
         if (post) {
             try {
-                const file = await appwriteService.uploadFile(data.image[0])
+                let file;
+                let image;
+                if (data.image[0]) {
+                     file = await appwriteService.uploadFile(data.image[0])
+                     image = await appwriteService.getFilePreview(file.$id)
+                }
 
                 if (file) {
                     await appwriteService.deleteFile(post.coverImageId);
@@ -37,11 +42,11 @@ function PostForm({ post }) {
                     post.$id, {
                     ...data,
                     coverImageId: file ? file.$id : undefined,
-                    coverImageUrl: file ? file.href : undefined
+                    coverImageUrl: image ? image.href : undefined
                 }
                 );
 
-                if (updatedPost) navigate(`post/${post.$id}`)
+                if (updatedPost) navigate(`/post/${post.$id}`)
             } catch (error) {
                 console.log('error in updating post! :', error)
             }
@@ -88,7 +93,7 @@ function PostForm({ post }) {
     }, [slugTransform, watch, setValue])
 
     return (
-        <div className="mt-20">
+        <div className="mt-40">
             <form onSubmit={handleSubmit(submit)} className="flex flex-wrap" >
                 <div className=" w-2/3 px-2">
                     <Input
@@ -117,11 +122,11 @@ function PostForm({ post }) {
                         name="coverimage"
                         placeholder="add cover image"
                         className="mb-4"
-                        {...register("image", { required: !post })} // due to this user can not creae the post
+                        {...register("image", { required:post ? !post : false  }) } // due to this user can not creae the post
                     />
                     {post && (
                         <div>
-                            <img src={appwriteService.getFilePreview(post.coverImageId)}
+                            <img src={post.coverImageUrl}
                                 alt={post.title}
                                 className="rounded-lg"
                             />
@@ -149,7 +154,7 @@ function PostForm({ post }) {
                         control={control}
                         name={"content"}
                         label={"content"}
-                        defaultValue="write your article here"
+                        defaultValue={post?.content}
                         className="mb-4"
                     />
             </form>

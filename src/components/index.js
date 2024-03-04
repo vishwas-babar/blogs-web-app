@@ -30,5 +30,4 @@ export {
     ProfileCard,
     Protected,
     SinglePost,
-    
 }

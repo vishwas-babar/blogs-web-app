@@ -29,23 +29,38 @@ function Home() {
 
 
 
-    return (
-        <main className=' min-h-screen mt-28 flex gap-4 justify-around flex-wrap w-[90%] mx-auto mb-10 '>
-            {posts.length > 0 ? posts.map(post => (
-                <div key={post.$id} className=" w-80 h-fit"  >
-                    <PostCard id={post.$id} title={post.title} coverImageUrl={post.coverImageUrl} />
-                </div>
+    // return (
+    //     <main className=' min-h-screen mt-28 flex gap-4 justify-around flex-wrap w-[90%] mx-auto mb-10 '>
+    //         {posts.length > 0 ? posts.map(post => (
+    //             <div key={post.$id} className=" w-80 h-fit"  >
+    //                 <PostCard
+    //                     id={post.$id}
+    //                     title={post.title}
+    //                     coverImageUrl={post.coverImageUrl}
+    //                     onclick={() => {
+    //                         navigate(`/post/${post.$id}`)
+    //                     }}
+    //                 />
+    //             </div>
 
-            )) : (<div className="w-full flex items-center justify-center"><h1 className=' text-lg' >we dont have any post yet</h1></div>)}
-        </main>
-    )
+    //         )) : (<div className="w-full flex items-center justify-center"><h1 className=' text-lg' >we dont have any post yet</h1></div>)}
+    //     </main>
+    // )
 
     if (loginStatus) {
         return (
-            <main className=' min-h-screen mt-20 flex flex-wrap w-[80%] mx-auto '>
+            <main className=' min-h-screen mt-28 flex gap-4 justify-around flex-wrap w-[90%] mx-auto mb-10 '>
                 {posts.length > 0 ? posts.map(post => (
-                    <div key={post.$id} className=" w-1/3 h-fit"  >
-                        <PostCard id={post.$id} title={post.title} coverImageUrl={post.coverImageUrl} />
+                    <div key={post.$id} className=" w-80 h-fit"  >
+                        <PostCard
+                            id={post.$id}
+                            title={post.title}
+                            coverImageUrl={post.coverImageUrl}
+                            onClick={() => {
+                                console.log("navigating user to - /post/", post.$id )
+                                navigate(`/post/${post.$id}`)
+                            }}
+                        />
                     </div>
 
                 )) : (<div className="w-full flex items-center justify-center"><h1 className=' text-lg' >we dont have any post yet</h1></div>)}
@@ -58,7 +73,7 @@ function Home() {
                 <Button
                     children="Login"
                     onClick={() => navigate('/login')}
-                    className=' w-24 mt-4'
+                    className="w-20 flex items-center justify-center"
                 />
             </div>
         )

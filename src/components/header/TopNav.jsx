@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { LogoutBtn, Container } from "../index.js";
 import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import SideNav from './SideNav.jsx';
 
 function TopNav() {
 
   const authStatus = useSelector((state) => state.user.status);
+  const [sideNavView, setsideNavView] = useState("mr-[-100%]");
   const navigate = useNavigate();
   const [navItems, setnavItems] = useState([
     {
@@ -28,8 +30,8 @@ function TopNav() {
 
     },
     {
-      name: "all Posts",
-      path: "/all-posts",
+      name: "My Posts",
+      path: "/my-posts",
       active: true
 
     },
@@ -49,7 +51,7 @@ function TopNav() {
       navItemsCopy[1].active = false; // disable login nav item
       navItemsCopy[2].active = false;// disable signup nav item
       setnavItems(navItemsCopy);
-    }else{
+    } else {
       const navItemsCopy = navItems.slice();
       navItemsCopy[1].active = true; // enable login nav item
       navItemsCopy[2].active = true;// enable signup nav item
@@ -83,10 +85,10 @@ function TopNav() {
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
 
             {navItems.map(item => item.active ? (
-              <li key={item.name}>
+              <li key={item.name} className='hidden md:flex'>
                 <NavLink
                   to={item.path}
-                  className={({isActive}) => `py-2 px-3 flex items-center justify-center text-white bg-blue-700 rounded md:bg-transparent ${isActive ? "border border-white border-spacing-1" : ""}` }
+                  className={({ isActive }) => `py-2 px-3 flex items-center justify-center text-white bg-blue-700 rounded md:bg-transparent ${isActive ? "border border-white border-spacing-1" : ""}`}
                   aria-current="page"
                 >
                   {item.name}
@@ -94,7 +96,8 @@ function TopNav() {
               </li>
             ) : null)}
 
-{authStatus ? (
+          </ul>
+          {/* {authStatus ? (
             <>
               <LogoutBtn />
               <img
@@ -105,11 +108,27 @@ function TopNav() {
               />
             </>
           ) : (null)
-          }
-          </ul>
+          } */}
         </div>
+        {authStatus ? (
+          <div className='flex '>
+            <LogoutBtn className="" />
+            <img
+              className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+              src="https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1709438667~exp=1709439267~hmac=7bf329b982340826d03d397b3e2096b67d618c41a84804987977967bc172f1c4"
+              alt="Bordered avatar"
+              onClick={() => navigate("/my-profile")}
+            />
+          </div>
+        ) : (null)}
+        <div
+          onClick={() => { setsideNavView("mr-0") }}
+          className='md:hidden size-10 rounded-full transition-all duration-300 active:scale-90 hover:scale-105 shadow-md shadow-slate-200 flex items-center justify-center'>
+          <i className='bx bxs-left-arrow  text-white'></i>
+        </div>
+        <SideNav options={navItems} sideNavView={sideNavView} closeSideNav={() => setsideNavView("mr-[-100%]")} />
       </div>
-    </nav>
+    </nav >
 
   )
 }

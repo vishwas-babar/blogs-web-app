@@ -1,18 +1,18 @@
 import React from 'react'
 import appwriteService from '../appwrite/config.js'
 
-function PostCard({slug, id, title, coverImageUrl }) {
+function PostCard({ slug, id, title, coverImageUrl, onClick }) {
     return (
-        <div className="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
+        <div onClick={onClick}  className="border-r border-b border-l border-t rounded-md border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
             <div className='w-full flex  aspect-video overflow-hidden mb-3'>
-            <img
-                src={coverImageUrl}
-                className=" object-cover "
-            />
+                <img
+                    src={coverImageUrl}
+                    className=" object-cover "
+                />
             </div>
             <div className="p-4 pt-2">
                 <div className="mb-8">
-                    
+
                     <a
                         href="#"
                         className="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 inline-block"
