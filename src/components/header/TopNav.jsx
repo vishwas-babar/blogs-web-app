@@ -79,7 +79,7 @@ function TopNav() {
           
         </div> */}
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          className="items-center justify-between hidden w-full md:flex md:w-auto"
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -110,9 +110,12 @@ function TopNav() {
           ) : (null)
           } */}
         </div>
+        
+        <div className='flex items-center justify-center gap-3'>
+
         {authStatus ? (
-          <div className='flex '>
-            <LogoutBtn className="" />
+          <div className='flex items-center'>
+            <LogoutBtn className=" self-center" />
             <img
               className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
               src="https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1709438667~exp=1709439267~hmac=7bf329b982340826d03d397b3e2096b67d618c41a84804987977967bc172f1c4"
@@ -126,6 +129,8 @@ function TopNav() {
           className='md:hidden size-10 rounded-full transition-all duration-300 active:scale-90 hover:scale-105 shadow-md shadow-slate-200 flex items-center justify-center'>
           <i className='bx bxs-left-arrow  text-white'></i>
         </div>
+        </div>
+        
         <SideNav options={navItems} sideNavView={sideNavView} closeSideNav={() => setsideNavView("mr-[-100%]")} />
       </div>
     </nav >
